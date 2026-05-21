@@ -41,5 +41,36 @@ function formatFaktor(wert) {
     }) + '×';
 }
 
-calculate();
-console.log('Sparplanrechner geladen');
+document.querySelectorAll('.input-group').forEach(gruppe => {
+    const einheit = gruppe.dataset.einheit;
+    const slider = gruppe.querySelector('input[type="range"]');
+    const num = gruppe.querySelector('input[type="number"]')
+    const display = gruppe.querySelector('.input-value-display');
+
+    console.log(einheit, slider, num, display)
+
+
+    slider.addEventListener('input', () => {
+        num.value = slider.value;
+        display.textContent = formatDisplay(slider.value, einheit);
+        calculate();
+    });
+
+    num.addEventListener('input', () => {
+        slider.value = num.value;
+        display.textContent = formatDisplay(num.value, einheit);
+        calculate();
+    });
+
+});
+
+    
+
+
+function formatDisplay(wert, einheit) {
+    if (einheit === '€') return Number(wert).toLocaleString('de-DE') + ' €';
+    if (einheit === 'Jahre') return wert + ' Jahre';
+    return wert;
+}
+
+calculate(); // beim start einmalig

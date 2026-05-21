@@ -10,7 +10,8 @@
     --accent-green: #00d4aa; /* Positives; (Rendite, usw.) */
     --accent-orange: #f5a623; /* Titel, und Neutrales */
     --accent-red: #ff4d6d; /* Negatives: Steuern, usw. */
-    --font: 'Segoe UI', Arial, sans-serif;
+    --accent-blue: #4B8DF4;
+    --font: 'Syne', Arial, sans-serif;
 }
 
 /* Browser Defaults resetten */

@@ -190,3 +190,12 @@ label {
 .card-orange .card-value { color: var(--accent-orange); }
 .card-red .card-value { color: var(--accent-red); } /* später: Steuerbelastung, TER-Verlust (?) */
 .card-blue .card-value { color: var(--accent-blue); }
+.card.card-green  { 
+    border-color: color-mix(in srgb, var(--accent-green) 30%, transparent); 
+}
+.card.card-orange  { 
+    border-color: color-mix(in srgb, var(--accent-orange) 30%, transparent); 
+}
+.card.card-blue  { 
+    border-color: color-mix(in srgb, var(--accent-blue) 30%, transparent); 
+}

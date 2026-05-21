@@ -18,7 +18,45 @@
     <main class="calculator-grid">
 
         <div class="input-panel">
-            <p>Eingaben hier...</p>
+
+            <h2 class="panel-title">Einzahlungen</h2>
+
+            <!-- Startkapital -->
+            <div class="input-group accent-orange">
+                <div class="input-label-row">
+                    <label for="startkapital">Startkapital</label>
+                    <span class="input-value-display">0 €</span>
+                </div>
+                <div class="slider-row">
+                    <input type="range" id="startkapital" min="0" max="100000" step="500" value="0"> 
+                    <input type="number" id="startkapital-num" min="0" max="100000" step="500" value="0">
+                </div>
+            </div>
+
+            <!-- Sparrate -->
+            <div class="input-group accent-orange">
+                <div class="input-label-row">
+                    <label for="sparrate">Monatliche Sparrate</label>
+                    <span class="input-value-display">300 €</span>
+                </div>
+                <div class="slider-row">
+                    <input type="range" id="sparrate" min="0" max="5000" step="50" value="300">
+                    <input type="number" id="sparrate-num" min="0" max="5000" step="50" value="300">
+                </div>
+            </div>
+
+            <!-- Laufzeit -->
+            <div class="input-group accent-orange">
+                <div class="input-label-row">
+                    <label for="laufzeit">Anlagezeitraum</label>
+                    <span class="input-value-display">30 Jahre</span>
+                </div>
+                <div class="slider-row">
+                    <input type="range" id="laufzeit" min="1" max="50" step="1" value="30">
+                    <input type="number" id="laufzeit-num" min="1" max="50" step="1" value="30">
+                </div>
+            </div>
+
         </div>
 
         <div class="result-panel">

@@ -8,8 +8,8 @@
     --text-primary: #e8eaf0;
     --text-muted: #6b7280; /* Anmerkungen, Erklärungen */
     --accent-green: #00d4aa; /* Positives; (Rendite, usw.) */
-    --accent-orange: #f5a623; /* Titel, und ... (?) */
-    --accent-red: #ff4d6d;
+    --accent-orange: #f5a623; /* Titel, und Neutrales */
+    --accent-red: #ff4d6d; /* Negatives: Steuern, usw. */
     --font: 'Segoe UI', Arial, sans-serif;
 }
 
@@ -87,3 +87,63 @@ body {
     border-radius: 12px;
     padding: 1.5rem;
 }
+
+/* ---- Eingabefelder ------- */
+
+.panel-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.input-value-display {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.slider-row input[type="range"] {
+    flex: 1;        /* Slider bekommt den ganzen verfügbaren Platz */
+}
+
+.slider-row input[type="number"] {
+    width: 75px;    /* Zahlenfeld fix schmal */
+    margin-top: 0;  /* überschreibt das margin-top von vorhin */
+    padding: 0.4rem 0.6rem;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+/* modfier klassen - farben */
+.accent-orange .input-value-display { color: var(--accent-orange); }
+.accent-orange input[type="range"]  { accent-color: var(--accent-orange); }
+
+.accent-green .input-value-display  { color: var(--accent-green); }
+.accent-green input[type="range"]   { accent-color: var(--accent-green); }
+
+.accent-red .input-value-display    { color: var(--accent-red); }
+.accent-red input[type="range"]     { accent-color: var(--accent-red); }

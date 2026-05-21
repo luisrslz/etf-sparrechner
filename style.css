@@ -137,6 +137,7 @@ label {
     border-radius: 12px;
     color: var(--text-primary);
     font-size: 0.9rem;
+    font-family: var(--font);
 }
 
 /* modfier klassen - farben */
@@ -148,3 +149,44 @@ label {
 
 .accent-red .input-value-display    { color: var(--accent-red); }
 .accent-red input[type="range"]     { accent-color: var(--accent-red); }
+
+/* Ergebniskarten */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.card {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column; /* v.o.n.u -> titel, zahl, anmerkung */
+    gap: 0.3rem;
+}
+
+.card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.card-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.card-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.card-green .card-value { color: var(--accent-green); }
+.card-orange .card-value { color: var(--accent-orange); }
+.card-red .card-value { color: var(--accent-red); } /* später: Steuerbelastung, TER-Verlust (?) */
+.card-blue .card-value { color: var(--accent-blue); }

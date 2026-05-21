@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
 
 </head>
+
 <body>
 
     <!-- Titel -->
@@ -64,7 +65,36 @@
         </div>
 
         <div class="result-panel">
-            <p>Ergebnisse hier...</p>
+            
+            <div class="cards-grid">
+
+                <div class="card card-orange">
+                    <span class="card-label">Endkapital Brutto</span>
+                    <span class="card-value" id="endkapital-brutto"> - </span>
+                    <span class="card-sub">vor Steuer, nach TER</span>
+                </div>
+
+                <div class="card card-green">
+                    <span class="card-label">Endkapital Netto</span>
+                    <span class="card-value" id="endkapital-netto"> - </span>
+                    <span class="card-sub">nach Steuer</span>
+                </div>
+
+                <div class="card card-blue">
+                    <span class="card-label">Kaufkraftbereinigt</span>
+                    <span class="card-value" id="kaufkraft"> - </span>
+                    <span class="card-sub">Inflation (<span id="inflationsrate-display">2.0</span>%)</span>
+                </div>
+
+                <div class="card">
+                    <span class="card-label">Kapitalfaktor</span>
+                    <span class="card-value" id="kapitalfaktor"> - </span>
+            <span class="card-sub">× eingezahltes Kapital</span>
+        </div>
+
+            </div>
+
+
         </div>
 
     </main>

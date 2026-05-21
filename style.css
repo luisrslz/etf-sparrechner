@@ -1,6 +1,89 @@
-/* Initial Styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+
+/* Farben */
+:root {
+    --bg-primary: #07090E; /* Hintergrundfarbe */
+    --bg-card:      #111420; /* (Kartenlayout) Farben der Karten */
+    --bg-input: #0A0C11; /* Farbe für Eingabefelder */
+    --border:  #2a2f45;
+    --text-primary: #e8eaf0;
+    --text-muted: #6b7280; /* Anmerkungen, Erklärungen */
+    --accent-green: #00d4aa; /* Positives; (Rendite, usw.) */
+    --accent-orange: #f5a623; /* Titel, und ... (?) */
+    --accent-red: #ff4d6d;
+    --font: 'Segoe UI', Arial, sans-serif;
 }
 
+/* Browser Defaults resetten */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Header */
+.site-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.site-header h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 0rem; /* abstand zum untertitel sonst zu groß */
+}
+
+.site-footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+}
+
+/* "Sparrechner" im Titel in Orange */
+.highlight {
+    color: var(--accent-orange);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin-inline: auto;
+}
+
+
+/* Kartenlayout als css-Grid */
+.calculator-grid {
+    display: grid;
+    /* linke spalte: 400px, rechte spalte: rest */
+    grid-template-columns: 400px 1fr; 
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin-inline: auto;
+}
+
+/* Linke Spalte */
+.input-panel {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+/* Rechte Spalte */
+.result-panel {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+}

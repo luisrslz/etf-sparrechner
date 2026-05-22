@@ -82,3 +82,13 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
     });
 });
+
+// listener für theme-toggle
+document.getElementById('theme-toggle').addEventListener('click', () => {
+    const html = document.documentElement;
+    if (html.dataset.theme === 'light') {
+        html.dataset.theme = 'dark';
+    } else {
+        html.dataset.theme = 'light';
+    }   
+});

@@ -14,6 +14,20 @@
     --font: 'Inter', sans-serif;
 }
 
+/* light mode farben */
+ [data-theme="light"] {
+    --bg-primary:  #eff1f5;
+    --bg-card:     #dcdee3;
+    --bg-input:    #eff1f5;
+    --border:      #acb0be;
+    --text-primary: #4c4f69;
+    --text-muted:  #6c6f85;
+    --accent-orange: #f08a0c;
+    --accent-blue: #1e66f5;
+    --accent-green: #40a02b;
+    --accent-red: #d20f39;
+ }
+
 /* Browser Defaults resetten */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -62,6 +76,23 @@ body {
     max-width: 500px;
     margin-inline: auto;
 }
+
+.theme-toggle {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.theme-toggle svg {
+    fill: var(--text-primary)
+}
+
+/* jeweils ein- und ausblenden */
+[data-theme="light"] #icon-moon {display: none;}
+[data-theme="dark"] #icon-sun {display: none;}
 
 
 /* Kartenlayout als css-Grid */

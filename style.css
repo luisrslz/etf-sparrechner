@@ -201,3 +201,40 @@ label {
 .card.card-blue  { 
     border-color: color-mix(in srgb, var(--accent-blue) 30%, transparent); 
 }
+
+/* tab buttons */
+.tab-buttons {
+    display: flex;
+    gap: 0.25rem;
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    padding: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.5rem 0.25rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s; 
+}
+
+.tab-btn.active {
+    background-color: var(--accent-orange);
+    color: #000;
+    font-weight: 700; 
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}

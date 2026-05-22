@@ -61,9 +61,6 @@ document.querySelectorAll('.input-group').forEach(gruppe => {
 
 });
 
-    
-
-
 function formatDisplay(wert, einheit) {
     if (einheit === '€') return Number(wert).toLocaleString('de-DE') + ' €';
     if (einheit === 'Jahre') return wert + ' Jahre';
@@ -71,3 +68,17 @@ function formatDisplay(wert, einheit) {
 }
 
 calculate(); // beim start einmalig
+
+//listener für tab-buttons
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});

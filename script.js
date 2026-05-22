@@ -47,9 +47,6 @@ document.querySelectorAll('.input-group').forEach(gruppe => {
     const num = gruppe.querySelector('input[type="number"]')
     const display = gruppe.querySelector('.input-value-display');
 
-    console.log(einheit, slider, num, display)
-
-
     slider.addEventListener('input', () => {
         num.value = slider.value;
         display.textContent = formatDisplay(slider.value, einheit);

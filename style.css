@@ -94,6 +94,10 @@ body {
 [data-theme="light"] #icon-moon {display: none;}
 [data-theme="dark"] #icon-sun {display: none;}
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
 
 /* Kartenlayout als css-Grid */
 .calculator-grid {

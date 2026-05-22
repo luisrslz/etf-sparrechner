@@ -2,9 +2,9 @@
 const ZINSSATZ_JAHR = 0.07; // später verstellbar
 
 function calculate() {
-    const startkapital = parseFloat(document.getElementById("startkapital").value);
-    const monatlicheEinzahlung = parseFloat(document.getElementById("sparrate").value);
-    const laufzeit = parseInt(document.getElementById("laufzeit").value);
+    const startkapital = parseFloat(document.getElementById("startkapital-num").value);
+    const monatlicheEinzahlung = parseFloat(document.getElementById("sparrate-num").value);
+    const laufzeit = parseInt(document.getElementById("laufzeit-num").value);
 
     const r = ZINSSATZ_JAHR / 12; // monatlich
     const n = laufzeit * 12; 
@@ -47,6 +47,8 @@ document.querySelectorAll('.input-group').forEach(gruppe => {
     const num = gruppe.querySelector('input[type="number"]')
     const display = gruppe.querySelector('.input-value-display');
 
+    const max = parseFloat(gruppe.dataset.max) || Infinity; // wenn nichts festgelegt ist kein Limit
+
     slider.addEventListener('input', () => {
         num.value = slider.value;
         display.textContent = formatDisplay(slider.value, einheit);
@@ -54,6 +56,9 @@ document.querySelectorAll('.input-group').forEach(gruppe => {
     });
 
     num.addEventListener('input', () => {
+        if (parseFloat(num.value) > max) {
+            num.value = max;
+        }
         slider.value = num.value;
         display.textContent = formatDisplay(num.value, einheit);
         calculate();

@@ -47,38 +47,38 @@
             <div class="tab-content active" id="tab-einzahlungen">
 
                 <!-- Startkapital -->
-                <div class="input-group accent-orange" data-einheit="€">
+                <div class="input-group accent-orange" data-einheit="€" data-max="100000">
                     <div class="input-label-row">
                         <label for="startkapital">Startkapital</label>
                         <span class="input-value-display" id="startkapital-display">0 €</span>
                     </div>
                     <div class="slider-row">
                         <input type="range" id="startkapital" min="0" max="30000" step="500" value="0"> 
-                        <input type="number" id="startkapital-num" min="0" max="30000" step="500" value="0">
+                        <input type="number" id="startkapital-num" min="0" step="500" value="0">
                     </div>
                 </div>
 
                 <!-- Sparrate -->
-                <div class="input-group accent-orange" data-einheit="€">
+                <div class="input-group accent-orange" data-einheit="€" data-max="10000">
                     <div class="input-label-row">
                         <label for="sparrate">Monatliche Sparrate</label>
                         <span class="input-value-display" id="sparrate-display">300 €</span>
                     </div>
                     <div class="slider-row">
-                        <input type="range" id="sparrate" min="0" max="5000" step="50" value="300">
-                        <input type="number" id="sparrate-num" min="0" max="5000" step="50" value="300">
+                        <input type="range" id="sparrate" min="0" max="2500" step="50" value="300">
+                        <input type="number" id="sparrate-num" min="0" step="50" value="300">
                     </div>
                 </div>
 
                 <!-- Laufzeit -->
-                <div class="input-group accent-orange" data-einheit="Jahre">
+                <div class="input-group accent-orange" data-einheit="Jahre" data-max="99">
                     <div class="input-label-row">
                         <label for="laufzeit">Anlagezeitraum</label>
                         <span class="input-value-display" id="laufzeit-display">30 Jahre</span>
                     </div>
                     <div class="slider-row">
                         <input type="range" id="laufzeit" min="1" max="50" step="1" value="30">
-                        <input type="number" id="laufzeit-num" min="1" max="50" step="1" value="30">
+                        <input type="number" id="laufzeit-num" min="1" step="1" value="30">
                     </div>
                 </div>
             </div>

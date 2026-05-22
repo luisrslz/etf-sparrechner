@@ -1,18 +1,32 @@
 
-/* Farben */
+/* Farben (catppuccin macchiato) */
 :root {
-    --bg-primary: #07090E; /* Hintergrundfarbe */
-    --bg-card:      #111420; /* (Kartenlayout) Farben der Karten */
-    --bg-input: #0A0C11; /* Farbe für Eingabefelder */
-    --border:  #2a2f45;
-    --text-primary: #e8eaf0;
-    --text-muted: #6b7280; /* Anmerkungen, Erklärungen */
-    --accent-green: #00d4aa; /* Positives; (Rendite, usw.) */
-    --accent-orange: #f5a623; /* Titel, und Neutrales */
-    --accent-red: #ff4d6d; /* Negatives: Steuern, usw. */
-    --accent-blue: #4B8DF4;
+    --bg-primary: #24273a; /* Hintergrundfarbe */
+    --bg-card:      #363a4f; /* (Kartenlayout) Farben der Karten */
+    --bg-input: #24273a; /* Farbe für Eingabefelder */
+    --border:  #5b6078;
+    --text-primary: #cad3f5;
+    --text-muted: #a5adcb; /* Anmerkungen, Erklärungen */
+    --accent-green: #a6da95; /* Positives; (Rendite, usw.) */
+    --accent-orange: #f69e67; /* Titel, und Neutrales */
+    --accent-red: #ed8796; /* Negatives: Steuern, usw. */
+    --accent-blue: #8aadf4;
     --font: 'Inter', sans-serif;
 }
+
+/* light mode farben */
+ [data-theme="light"] {
+    --bg-primary:  #eff1f5;
+    --bg-card:     #dcdee3;
+    --bg-input:    #eff1f5;
+    --border:      #acb0be;
+    --text-primary: #4c4f69;
+    --text-muted:  #6c6f85;
+    --accent-orange: #f08a0c;
+    --accent-blue: #1e66f5;
+    --accent-green: #40a02b;
+    --accent-red: #d20f39;
+ }
 
 /* Browser Defaults resetten */
 *, *::before, *::after {
@@ -63,6 +77,27 @@ body {
     margin-inline: auto;
 }
 
+.theme-toggle {
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.theme-toggle svg {
+    fill: var(--text-primary)
+}
+
+/* jeweils ein- und ausblenden */
+[data-theme="light"] #icon-moon {display: none;}
+[data-theme="dark"] #icon-sun {display: none;}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
 
 /* Kartenlayout als css-Grid */
 .calculator-grid {
@@ -193,13 +228,13 @@ label {
 .card-red .card-value { color: var(--accent-red); } /* später: Steuerbelastung, TER-Verlust (?) */
 .card-blue .card-value { color: var(--accent-blue); }
 .card.card-green  { 
-    border-color: color-mix(in srgb, var(--accent-green) 30%, transparent); 
+    border-color: color-mix(in srgb, var(--accent-green) 50%, transparent); 
 }
 .card.card-orange  { 
-    border-color: color-mix(in srgb, var(--accent-orange) 30%, transparent); 
+    border-color: color-mix(in srgb, var(--accent-orange) 50%, transparent); 
 }
 .card.card-blue  { 
-    border-color: color-mix(in srgb, var(--accent-blue) 30%, transparent); 
+    border-color: color-mix(in srgb, var(--accent-blue) 50%, transparent); 
 }
 
 /* tab buttons */

@@ -138,6 +138,11 @@ input[type="number"]::-webkit-outer-spin-button {
     margin-bottom: 1.5rem;
 }
 
+.input-group.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
 .input-label-row {
     display: flex;
     justify-content: space-between;
@@ -286,4 +291,67 @@ label {
     height: 1px;
     background-color: var(--border);
     margin: 1.5rem 0;
+}
+
+/* toggles */
+.toggle-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.toggle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.toggle-label {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.toggle-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    cursor: pointer;
+} 
+
+.toggle-switch input {
+    opacity: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background-color: var(--border);
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--accent-green);
+}
+
+input:checked + .toggle-slider::before {
+    transform: translateX(20px);
 }

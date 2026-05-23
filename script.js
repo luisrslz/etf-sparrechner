@@ -69,6 +69,7 @@ document.querySelectorAll('.input-group').forEach(gruppe => {
 function formatDisplay(wert, einheit) {
     if (einheit === '€') return Number(wert).toLocaleString('de-DE') + ' €';
     if (einheit === 'Jahre') return wert + ' Jahre';
+    if (einheit === '%') return wert + ' %';
     return wert;
 }
 
@@ -96,4 +97,17 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
     } else {
         html.dataset.theme = 'light';
     }   
+});
+
+// listener für toggle, die slider aktivieren/deaktivieren
+document.querySelectorAll('input[type="checkbox"][data-controls]').forEach(toggle => {
+    const target = document.getElementById(toggle.dataset.controls);
+
+    function updateToggle() {
+        target.classList.toggle('disabled');
+        calculate(); // -> hier nochmal aufrufen
+    }
+
+    toggle.addEventListener('change', updateToggle);
+    updateToggle();
 });

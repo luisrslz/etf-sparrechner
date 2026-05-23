@@ -86,6 +86,31 @@
 
                 <div class="section-divider"></div>
                 <p class="section-title">Sparratenerhöhung</p>
+
+                <div class="toggle-group">
+                    <div class="toggle-info">
+                        <span class="toggle-label">Jährliche Sparratenerhöhung</span>
+                        <span class="toggle-sub">Gleicht Gehaltserhöhungen / Inflation aus</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="sparraten-erhoehung" data-controls="erhoehung-group">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="input-group accent-green" data-einheit="%" data-max="20" id="erhoehung-group">
+                    <div class="input-label-row">
+                        <label for="erhoehung">Erhöhung p.a.</label>
+                        <span class="input-value-display" id="erhoehung-display">2,0 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="erhoehung" min="0.1" max="10" step="0.1" value="0">
+                        <input type="number" id="erhoehung-num" min="0.1" step="0.1" value="2">
+                    </div>
+                </div>
+
+                
+
             </div>
 
             <div class="tab-content" id="tab-rendite">
@@ -126,8 +151,8 @@
                 <div class="card">
                     <span class="card-label">Kapitalfaktor</span>
                     <span class="card-value" id="kapitalfaktor"> - </span>
-            <span class="card-sub">× eingezahltes Kapital</span>
-        </div>
+                    <span class="card-sub">× eingezahltes Kapital</span>
+                </div>
             </div>
         </div>
     </main>

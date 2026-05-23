@@ -5,17 +5,27 @@ function calculate() {
     const startkapital = parseFloat(document.getElementById("startkapital-num").value);
     const monatlicheEinzahlung = parseFloat(document.getElementById("sparrate-num").value);
     const laufzeit = parseInt(document.getElementById("laufzeit-num").value);
+    const erhoehungAktiv = document.getElementById("sparraten-erhoehung").checked;
+    const erhoehung = erhoehungAktiv ? parseFloat(document.getElementById("erhoehung-num").value) / 100
+                                     : 0;
 
     const r = ZINSSATZ_JAHR / 12; // monatlich
-    const n = laufzeit * 12; 
 
-    // zinseszins
-    const endkapital = startkapital * Math.pow(1 + r, n)
-                       + monatlicheEinzahlung * (Math.pow(1 + r, n) - 1) / r;    
-                       
-    const eingezahlt = startkapital + monatlicheEinzahlung * n;
+    let kapital =  startkapital;
+    let eingezahlt = startkapital;
 
+    for (let jahr = 0; jahr < laufzeit; jahr++) {
+        const rate = monatlicheEinzahlung * Math.pow(1 + erhoehung, jahr);
+        eingezahlt += rate * 12;
+
+        for (let monat = 0; monat < 12; monat++) {
+            kapital = kapital * (1 + r) + rate;
+        }
+    }
+
+    const endkapital = kapital;
     const faktor = endkapital / eingezahlt;
+
 
     // ausgeben
     document.getElementById('endkapital-brutto').textContent = formatEuro(endkapital);

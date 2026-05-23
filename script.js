@@ -6,10 +6,14 @@ function calculate() {
     const erhoehungAktiv = document.getElementById("sparraten-erhoehung").checked;
     const erhoehung = erhoehungAktiv ? parseFloat(document.getElementById("erhoehung-num").value) / 100
                                      : 0;
-    const bruttorendite = parseFloat(document.getElementById("bruttorendite-num").value) / 100;
+    const bruttoRendite = parseFloat(document.getElementById("bruttorendite-num").value) / 100;
     
+    // bruttoRendite - TER =
+    const nettoRendite = bruttoRendite - (parseFloat(document.getElementById("ter-kosten-num").value) / 100);
 
-    const r = bruttorendite / 12; // monatlich
+    console.log(bruttoRendite)
+
+    const r = nettoRendite / 12; // monatlich
 
     let kapital =  startkapital;
     let eingezahlt = startkapital;

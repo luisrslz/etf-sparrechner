@@ -44,8 +44,10 @@
                 <button class="tab-btn" data-tab="entnahme">Entnahme</button>
             </div>
 
+            <!-- Einzahlungstab -->
             <div class="tab-content active" id="tab-einzahlungen">
 
+                <p class="section-title">Kapital & Laufzeit</p>
                 <!-- Startkapital -->
                 <div class="input-group accent-orange" data-einheit="€" data-max="100000">
                     <div class="input-label-row">
@@ -81,6 +83,9 @@
                         <input type="number" id="laufzeit-num" min="1" step="1" value="30">
                     </div>
                 </div>
+
+                <div class="section-divider"></div>
+                <p class="section-title">Sparratenerhöhung</p>
             </div>
 
             <div class="tab-content" id="tab-rendite">
@@ -123,12 +128,8 @@
                     <span class="card-value" id="kapitalfaktor"> - </span>
             <span class="card-sub">× eingezahltes Kapital</span>
         </div>
-
             </div>
-
-
         </div>
-
     </main>
 
     <footer class="site-footer">

@@ -385,3 +385,24 @@ input:checked + .toggle-slider::before {
     font-size: 0.75rem;
     color: var(--text-primary);
 }
+
+.info {
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-display {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.accent-green .info-display {
+    color: var(--accent-green)
+}

@@ -11,7 +11,7 @@ function calculate() {
     // bruttoRendite - TER =
     const nettoRendite = bruttoRendite - (parseFloat(document.getElementById("ter-kosten-num").value) / 100);
 
-    console.log(bruttoRendite)
+    document.getElementById('nettorendite-display').textContent = formatDisplay((nettoRendite * 100).toFixed(2), "%")
 
     const r = nettoRendite / 12; // monatlich
 

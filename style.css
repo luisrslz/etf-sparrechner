@@ -191,6 +191,9 @@ label {
 .accent-red .input-value-display    { color: var(--accent-red); }
 .accent-red input[type="range"]     { accent-color: var(--accent-red); }
 
+.accent-blue .input-value-display {color: var(--accent-blue);}
+.accent-blue input[type="range"] {accent-color: var(--accent-blue);}
+
 /* Ergebniskarten */
 
 .cards-grid {
@@ -386,10 +389,11 @@ input:checked + .toggle-slider::before {
     color: var(--text-primary);
 }
 
-.info {
+.info-group {
     background-color: var(--bg-primary);
     border-radius: 12px;
     padding: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .info-row {
@@ -403,6 +407,5 @@ input:checked + .toggle-slider::before {
     font-weight: 700;
 }
 
-.accent-green .info-display {
-    color: var(--accent-green)
-}
+.accent-green .info-display { color: var(--accent-green); }
+.accent-blue .info-display { color: var(--accent-blue); }

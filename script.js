@@ -7,11 +7,15 @@ function calculate() {
     const erhoehung = erhoehungAktiv ? parseFloat(document.getElementById("erhoehung-num").value) / 100
                                      : 0;
     const bruttoRendite = parseFloat(document.getElementById("bruttorendite-num").value) / 100;
+    const inflation = parseFloat(document.getElementById("inflation-num").value) / 100;
     
     // bruttoRendite - TER =
     const nettoRendite = bruttoRendite - (parseFloat(document.getElementById("ter-kosten-num").value) / 100);
-
-    document.getElementById('nettorendite-display').textContent = formatDisplay((nettoRendite * 100).toFixed(2), "%")
+    document.getElementById("nettorendite-display").textContent = formatDisplay((nettoRendite * 100).toFixed(2), "%");
+    
+    // nettoRendite - Inflation
+    const realRendite = nettoRendite - inflation;
+    document.getElementById("realrendite-display").textContent = formatDisplay((realRendite * 100).toFixed(2), "%");
 
     const r = nettoRendite / 12; // monatlich
 
@@ -28,16 +32,18 @@ function calculate() {
     }
 
     const endkapital = kapital;
-    const faktor = endkapital / eingezahlt;
+    const kaufkraft = endkapital / Math.pow(1 + inflation, laufzeit);
+    const faktor = kaufkraft / eingezahlt;
 
 
     // ausgeben
     document.getElementById('endkapital-brutto').textContent = formatEuro(endkapital);
     document.getElementById('kapitalfaktor').textContent = formatFaktor(faktor);
+    document.getElementById('kaufkraft').textContent = formatEuro(kaufkraft);
+    document.getElementById('inflationsrate-display').textContent = (inflation * 100).toFixed(1); // für subtitle im ergebnis
 
     // später
     document.getElementById('endkapital-netto').textContent = '-';
-    document.getElementById('kaufkraft').textContent = '-';
 
     // Sparratenverlaufs-Balken
     const verlaufContainer = document.getElementById('sparraten-verlauf');

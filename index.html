@@ -146,11 +146,30 @@
                     </div>
                 </div>
 
-                <div class="info accent-green" data-einheit="%">
+                <div class="info-group accent-green" data-einheit="%">
                     <div class="info-row">
                         <label for="nettorendite-display">Nettorendite (Markt - TER)</label>
                         <span class="info-display" id="nettorendite-display">6.96 %</span>
                     </div>
+                </div>
+
+                <div class="input-group accent-blue" data-einheit="%" data-max="10">
+                    <div class="input-label-row">
+                        <label for="inflation">Inflation (Kaufkraftsverlust)</label>
+                        <span class="input-value-display" id="inflation-display">2 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="inflation" min="0" max="8" step="0.1" value="2">
+                        <input type="number" id="inflation-num" min="0" step="0.1" value="2">
+                    </div>
+                </div>
+
+                <div class="info-group accent-blue" data-einheit="%">
+                    <div class="info-row">
+                        <label for="realrendite-display">Realrendite (Netto - Inflation)</label>
+                        <span class="info-display" id="realrendite-display">4.96 %</span>
+                    </div>
+
                 </div>
 
             </div>
@@ -183,11 +202,11 @@
                 <div class="card card-blue">
                     <span class="card-label">Kaufkraftbereinigt</span>
                     <span class="card-value" id="kaufkraft"> - </span>
-                    <span class="card-sub">Inflation (<span id="inflationsrate-display">2.0</span>%)</span>
+                    <span class="card-sub">Inflation (<span id="inflationsrate-display">2.0</span> %)</span>
                 </div>
 
                 <div class="card">
-                    <span class="card-label">Kapitalfaktor</span>
+                    <span class="card-label">Kapitalfaktor (real)</span>
                     <span class="card-value" id="kapitalfaktor"> - </span>
                     <span class="card-sub">× eingezahltes Kapital</span>
                 </div>

@@ -34,6 +34,30 @@ function calculate() {
     // später
     document.getElementById('endkapital-netto').textContent = '-';
     document.getElementById('kaufkraft').textContent = '-';
+
+    // Sparratenverlaufs-Balken
+    const verlaufContainer = document.getElementById('sparraten-verlauf');
+    verlaufContainer.innerHTML = '';
+
+    const balken = laufzeit < 5 ? laufzeit : 5;
+    const maxRate = monatlicheEinzahlung * Math.pow(1 + erhoehung, laufzeit - 1);
+
+    for (let i = 0; i < balken; i++) {
+        const jahr = i === 0 ? 1 : Math.ceil((laufzeit / (balken - 1)) * i);
+        console.log((laufzeit / (balken - 1)) * i)
+        const rate = monatlicheEinzahlung * Math.pow(1 + erhoehung, jahr - 1);
+        const breite = (rate / maxRate) * 100;
+
+        verlaufContainer.innerHTML += `
+            <div class="verlauf-row">
+                <span class="verlauf-label">J${jahr}</span>
+                <div class="verlauf-bar-wrap">
+                    <div class="verlauf-bar" style="width: ${breite}%"></div>
+                </div>
+                <span class="verlauf-wert">${Math.round(rate)}€</span>
+            </div>
+        `;
+    }
 }
 
 // schöner ausgeben

@@ -44,7 +44,6 @@ function calculate() {
 
     for (let i = 0; i < balken; i++) {
         const jahr = i === 0 ? 1 : Math.ceil((laufzeit / (balken - 1)) * i);
-        console.log((laufzeit / (balken - 1)) * i)
         const rate = monatlicheEinzahlung * Math.pow(1 + erhoehung, jahr - 1);
         const breite = (rate / maxRate) * 100;
 

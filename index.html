@@ -120,8 +120,21 @@
 
             </div>
 
-            <div class="tab-content" id="tab-rendite">
-                <p>Rendite-Einstellungen...</p>
+            <!-- Renditetab -->
+            <div class="tab-content active" id="tab-rendite">
+                <p class="section-title">Rendite & Kosten</p>
+
+                <div class="input-group accent-orange" data-einheit="%" data-max="75">
+                    <div class="input-label-row">
+                        <label for="bruttorendite">Jährl. Bruttorendite (Markt)</label>
+                        <span class="input-value-display" id="bruttorendite-display">7.16 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="bruttorendite" min="0.1" max="20" step="0.01" value="7.16"> 
+                        <input type="number" id="bruttorendite-num" min="0.1" step="0.1" value="7.16">
+                    </div>
+                </div>
+
             </div>
 
             <div class="tab-content" id="tab-steuern">

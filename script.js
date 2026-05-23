@@ -1,6 +1,4 @@
 
-const ZINSSATZ_JAHR = 0.07; // später verstellbar
-
 function calculate() {
     const startkapital = parseFloat(document.getElementById("startkapital-num").value);
     const monatlicheEinzahlung = parseFloat(document.getElementById("sparrate-num").value);
@@ -8,8 +6,10 @@ function calculate() {
     const erhoehungAktiv = document.getElementById("sparraten-erhoehung").checked;
     const erhoehung = erhoehungAktiv ? parseFloat(document.getElementById("erhoehung-num").value) / 100
                                      : 0;
+    const bruttorendite = parseFloat(document.getElementById("bruttorendite-num").value) / 100;
+    
 
-    const r = ZINSSATZ_JAHR / 12; // monatlich
+    const r = bruttorendite / 12; // monatlich
 
     let kapital =  startkapital;
     let eingezahlt = startkapital;

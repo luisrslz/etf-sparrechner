@@ -192,6 +192,9 @@ label {
 .accent-red .input-value-display    { color: var(--accent-red); }
 .accent-red input[type="range"]     { accent-color: var(--accent-red); }
 
+.accent-blue .input-value-display {color: var(--accent-blue);}
+.accent-blue input[type="range"] {accent-color: var(--accent-blue);}
+
 /* Ergebniskarten */
 
 .cards-grid {
@@ -386,3 +389,24 @@ input:checked + .toggle-slider::before {
     font-size: 0.75rem;
     color: var(--text-primary);
 }
+
+.info-group {
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-display {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.accent-green .info-display { color: var(--accent-green); }
+.accent-blue .info-display { color: var(--accent-blue); }

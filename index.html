@@ -120,8 +120,58 @@
 
             </div>
 
-            <div class="tab-content" id="tab-rendite">
-                <p>Rendite-Einstellungen...</p>
+            <!-- Renditetab -->
+            <div class="tab-content active" id="tab-rendite">
+                <p class="section-title">Rendite & Kosten</p>
+
+                <div class="input-group accent-orange" data-einheit="%" data-max="75">
+                    <div class="input-label-row">
+                        <label for="bruttorendite">Jährl. Bruttorendite (Markt)</label>
+                        <span class="input-value-display" id="bruttorendite-display">7.16 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="bruttorendite" min="0.1" max="20" step="0.01" value="7.16"> 
+                        <input type="number" id="bruttorendite-num" min="0.1" step="0.1" value="7.16">
+                    </div>
+                </div>
+
+                <div class="input-group accent-red" data-einheit="%" data-max="10">
+                    <div class="input-label-row">
+                        <label for="ter-kosten">TER (Fondskosten p.a.)</label>
+                        <span class="input-value-display" id="ter-kosten-display">0.2 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="ter-kosten" min="0" max="2" step="0.01" value="0.2">
+                        <input type="number" id="ter-kosten-num" min="0" step="0.1" value="0.2">
+                    </div>
+                </div>
+
+                <div class="info-group accent-green" data-einheit="%">
+                    <div class="info-row">
+                        <label for="nettorendite-display">Nettorendite (Markt - TER)</label>
+                        <span class="info-display" id="nettorendite-display">6.96 %</span>
+                    </div>
+                </div>
+
+                <div class="input-group accent-blue" data-einheit="%" data-max="10">
+                    <div class="input-label-row">
+                        <label for="inflation">Inflation (Kaufkraftsverlust)</label>
+                        <span class="input-value-display" id="inflation-display">2 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="inflation" min="0" max="8" step="0.1" value="2">
+                        <input type="number" id="inflation-num" min="0" step="0.1" value="2">
+                    </div>
+                </div>
+
+                <div class="info-group accent-blue" data-einheit="%">
+                    <div class="info-row">
+                        <label for="realrendite-display">Realrendite (Netto - Inflation)</label>
+                        <span class="info-display" id="realrendite-display">4.96 %</span>
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="tab-content" id="tab-steuern">
@@ -152,11 +202,11 @@
                 <div class="card card-blue">
                     <span class="card-label">Kaufkraftbereinigt</span>
                     <span class="card-value" id="kaufkraft"> - </span>
-                    <span class="card-sub">Inflation (<span id="inflationsrate-display">2.0</span>%)</span>
+                    <span class="card-sub">Inflation (<span id="inflationsrate-display">2.0</span> %)</span>
                 </div>
 
                 <div class="card">
-                    <span class="card-label">Kapitalfaktor</span>
+                    <span class="card-label">Kapitalfaktor (real)</span>
                     <span class="card-value" id="kapitalfaktor"> - </span>
                     <span class="card-sub">× eingezahltes Kapital</span>
                 </div>

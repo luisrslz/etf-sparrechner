@@ -174,6 +174,151 @@ function leseInputs() {
     };
 }
 
+// ergebnisse für jedes jahr
+function berechneJahresverlauf(input, gesamtStSatz) {
+
+    const labels = [], dataBrutto = [], dataNetto = [], dataKaufkraft = [], dataEingezahlt = [];
+
+    for (let jahr = 0; jahr < input.laufzeit; jahr++) {
+        
+        const brutto = berechneBruttoEndkapital({ ...input, laufzeit: jahr + 1 });
+        const eingezahlt = berechneEingezahlt({ ...input, laufzeit: jahr + 1 });
+        const netto = berechneNettoEndkapital(input, brutto, eingezahlt, gesamtStSatz);
+        const kaufkraft = netto / Math.pow(1 + input.inflation, jahr + 1);
+        
+
+        labels.push(`Jahr ${jahr + 1}`);
+        dataBrutto.push(Math.round(brutto));
+        dataNetto.push(Math.round(netto));
+        dataKaufkraft.push(Math.round(kaufkraft));
+        dataEingezahlt.push(Math.round(eingezahlt));
+    }
+
+    return { labels, dataBrutto, dataNetto, dataKaufkraft, dataEingezahlt };
+}
+
+let chart = null;
+
+function zeichneVermoegensverlauf(verlauf) {
+
+    const style = getComputedStyle(document.documentElement);
+    const orange = style.getPropertyValue('--accent-orange');
+    const green  = style.getPropertyValue('--accent-green');
+    const blue   = style.getPropertyValue('--accent-blue');
+    const muted  = style.getPropertyValue('--text-muted');
+    const primary = style.getPropertyValue('--text-primary');
+    const grid = style.getPropertyValue('--border').trim() + '66'; // opacity 40% durch 66
+
+    if (chart) {
+        // daten updaten
+        chart.data.labels = verlauf.labels;
+        chart.data.datasets[0].data = verlauf.dataBrutto;
+        chart.data.datasets[1].data = verlauf.dataNetto;
+        chart.data.datasets[2].data = verlauf.dataKaufkraft;
+        chart.data.datasets[3].data = verlauf.dataEingezahlt;
+        
+        // farben bei theme-wechsel updaten
+        chart.data.datasets[0].borderColor = orange;
+        chart.data.datasets[1].borderColor = green;
+        chart.data.datasets[2].borderColor = blue;
+        chart.data.datasets[3].borderColor = muted;
+        chart.options.scales.x.ticks.color = muted;
+        chart.options.scales.y.ticks.color = muted;
+        chart.options.scales.y.grid.color = grid;
+        chart.update();
+        return;
+    }
+
+    chart = new Chart(document.getElementById('vermoegens-chart'), {
+        type: 'line',
+        data: {
+            labels: verlauf.labels,
+            datasets: [
+                {
+                    label: 'Brutto',
+                    data: verlauf.dataBrutto,
+                    pointRadius: 0,
+                    pointStyle: 'rect'
+                },
+                {
+                    label: 'Netto',
+                    data: verlauf.dataNetto,      
+                    pointRadius: 0,
+                    pointStyle: 'rect'
+                },
+                {
+                    label: 'Kaufkraftbereinigt',
+                    data: verlauf.dataKaufkraft,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    pointStyle: 'rect'
+                },
+                {
+                    label: 'Eingezahlt',
+                    data: verlauf.dataEingezahlt,
+                    borderColor: muted,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    pointStyle: 'rect'
+                },
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    align: 'end',
+                    labels: { 
+                        color: muted, 
+                        usePointStyle: true, 
+                        boxWidth: 12,
+                        boxHeight: 12,
+                    },
+                },
+                tooltip: {
+                    backgroundColor: style.getPropertyValue('--bg-card').trim(),
+                    titleColor: muted,
+                    bodyColor: style.getPropertyValue('--text-primary').trim(),
+                    borderColor: style.getPropertyValue('--border').trim(),
+                    borderWidth: 1,
+                    // tooltip zahlen formatieren
+                    callbacks: {
+                        label: (ctx) => {
+                            const wert = ctx.parsed.y;
+                            const label = ctx.dataset.label;
+                            if (wert >= 1_000_000) {
+                                return ` ${label}: ${(wert / 1_000_000).toFixed(2)} Mio. €`;
+                            }
+                            return ` ${label}: ${Math.round(wert).toLocaleString('de-DE')} €`;
+                            }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: muted, maxTicksLimit: 10 },
+                    grid: { display: true, color: grid },
+                },
+                y: {
+                    ticks: {
+                        color: muted,
+                        callback: val => val >= 1_000_000
+                            ? (val / 1_000_000).toFixed(1) + 'M €'
+                            : (val / 1_000).toFixed(0) + 'K €'
+                    },
+                    grid: { color: grid, display: true},
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            }
+        }
+    });
+}
+
 function main() {
 
     const input = leseInputs();
@@ -203,6 +348,9 @@ function main() {
     };
 
     anzeigenAktualisieren(input, ergebnisse);
+
+    const verlauf = berechneJahresverlauf(input, gesamtStSatz);
+    zeichneVermoegensverlauf(verlauf);
 
 }
 
@@ -259,6 +407,7 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
     } else {
         html.dataset.theme = 'light';
     }   
+    main();
 });
 
 // listener für toggle, die slider aktivieren/deaktivieren

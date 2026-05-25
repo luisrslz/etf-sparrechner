@@ -105,8 +105,8 @@ function formatDisplay(wert, einheit) {
     return wert;
 }
 
-// aktualisiert info panel im eingabebereich
-function infosAktualisieren(input, gesamtStSatz) {
+// aktualisiert alle infos im info-panel und result-panel 
+function anzeigenAktualisieren(input, ergebnisse) {
 
     // nettorendite info aktualisieren
     const nettoRendite = input.bruttoRendite - input.ter;
@@ -115,18 +115,40 @@ function infosAktualisieren(input, gesamtStSatz) {
     // für subtitle inflation im ergebnis kaufkraft
     document.getElementById('inflationsrate-display').textContent = (input.inflation * 100).toFixed(1); 
 
+    // einzahlungen card subtitle
+    document.getElementById('gesamteinzahlungen-sub').textContent = formatDisplay((ergebnisse.eingezahlt / ergebnisse.nettoEndkapital * 100).toFixed(1), "%");
+
+    const zinsgewinneBrutto = (ergebnisse.bruttoEndkapital - ergebnisse.eingezahlt) / ergebnisse.bruttoEndkapital * 100;
+    // zinsgewinne brutto card subtitle
+    document.getElementById('zinsgewinne-brutto-sub').textContent = formatDisplay(zinsgewinneBrutto.toFixed(1), "%");
+
+    // ter-verlust subtitle
+    document.getElementById('ter-sub').textContent = formatDisplay((input.ter * 100).toFixed(2), "%");
+
     // realrendite info aktualisieren
     const realRendite = nettoRendite - input.inflation;
     document.getElementById("realrendite-display").textContent = formatDisplay((realRendite * 100).toFixed(2), "%");
 
-    const nachTFS = gesamtStSatz * (1 - input.tfs);
+    const nachTFS = ergebnisse.gesamtStSatz * (1 - input.tfs);
     if (input.steuerAktiv) {
-        document.getElementById('gesamt-steuersatz').textContent = (gesamtStSatz * 100).toFixed(3) + ' %';
-        document.getElementById('nach-tfs').textContent = (nachTFS * 100).toFixed(3) + ' %';
+        document.getElementById('gesamt-steuersatz').textContent = formatDisplay((ergebnisse.gesamtStSatz * 100).toFixed(3), "%");
+        document.getElementById('nach-tfs').textContent = formatDisplay((nachTFS * 100).toFixed(3), "%");
+        document.getElementById('tfs-sub').textContent = formatDisplay((nachTFS * 100).toFixed(2), "%");
     } else {
         document.getElementById('gesamt-steuersatz').textContent = '-';
         document.getElementById('nach-tfs').textContent = '-';
+        document.getElementById('tfs-sub').textContent = '0 %';
     }
+
+    // result panel ausgeben
+    document.getElementById('endkapital-brutto').textContent = formatEuro(ergebnisse.bruttoEndkapital);
+    document.getElementById('endkapital-netto').textContent = formatEuro(ergebnisse.nettoEndkapital);
+    document.getElementById('kaufkraft').textContent = formatEuro(ergebnisse.kaufkraft);
+    document.getElementById('kapitalfaktor').textContent = formatFaktor(ergebnisse.faktor);
+    document.getElementById('gesamteinzahlungen').textContent = formatEuro(ergebnisse.eingezahlt);
+    document.getElementById('zinsgewinne-brutto').textContent = formatEuro(ergebnisse.bruttoEndkapital - ergebnisse.eingezahlt);
+    document.getElementById('steuerbelastung').textContent = formatEuro((ergebnisse.bruttoEndkapital - ergebnisse.nettoEndkapital));
+    document.getElementById('ter-verlust').textContent = formatEuro(ergebnisse.endkapitalOhneTER - ergebnisse.bruttoEndkapital);
 }
 
 // einlesen aller inputs
@@ -166,14 +188,22 @@ function main() {
 
     const faktor = kaufkraft / eingezahlt;
 
-    infosAktualisieren(input, gesamtStSatz);
     zeichneBalken(input);
 
-    // im result panel ausgeben, später in funktion packen
-    document.getElementById('endkapital-brutto').textContent = formatEuro(bruttoEndkapital);
-    document.getElementById('endkapital-netto').textContent = formatEuro(nettoEndkapital);
-    document.getElementById('kaufkraft').textContent = formatEuro(kaufkraft);
-    document.getElementById('kapitalfaktor').textContent = formatFaktor(faktor);
+    const endkapitalOhneTER = berechneBruttoEndkapital({ ...input, ter: 0 });
+
+    const ergebnisse = {
+        bruttoEndkapital,
+        nettoEndkapital,
+        gesamtStSatz,
+        eingezahlt,
+        kaufkraft,
+        faktor, 
+        endkapitalOhneTER
+    };
+
+    anzeigenAktualisieren(input, ergebnisse);
+
 }
 
 // listener für slider + number-inputs

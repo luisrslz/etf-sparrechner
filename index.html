@@ -173,9 +173,85 @@
                 </div>
 
             </div>
-
+                
+            <!-- Steuertab -->
             <div class="tab-content" id="tab-steuern">
-                <p>Steuern-Einstellungen...</p>
+
+                <p class="section-title">ETF-Typ & Steuern</p>
+
+                 <!-- abgeltungssteuer ? -->
+                <div class="toggle-group">
+                    <div class="toggle-info">
+                        <span class="toggle-label">Abgeltungssteuer berechnen (25 %)</span>
+                        <span class="toggle-sub">Dt. Kapitalerstragssteuer auf realisierte Gewinne</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="abgeltungssteuer" data-controls="steuer-details" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="section-divider"></div>
+                <p class="section-title">Details</p>
+                
+                <!-- dieser bereich deaktiviert wenn abgeltungssteuer aus ist -->
+                <div id="steuer-details">
+                    <!-- dropdown für etf-typ -->
+                    <div class="input-group">
+                        <div class="input-label-row">
+                            <label for="etf-typ">ETF-Typ (Teilfreistellungen)</label>
+                        </div>
+                        <select id="etf-typ">
+                            <option value="0.3">Aktien-ETF / Aktienfonds (30 % steuerfrei)</option>
+                            <option value="0.15">Mischfonds (15 % steuerfrei)</option>
+                            <option value="0.6">Immobilien-ETF (60 % steuerfrei)</option>
+                            <option value="0">Rentenfonds (0 % steuerfrei)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-label-row">
+                            <label>Sparerpauschbetrag p.a.</label>
+                        </div>
+                        <div class="pill-buttons" id="sparerpauschbetrag-buttons">
+                            <button class="pill-btn active" data-value="1000">1.000 € (Single)</button>
+                            <button class="pill-btn" data-value="2000">2.000 € (Verheiratet)</button>
+                        </div>
+                    </div>
+
+                    <!-- kirchensteuer? -->
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <span class="toggle-label">Kirchensteuer einbeziehen</span>
+                            <span class="toggle-sub">Bayern/BaWü: 8%, Restliche Bundesländer: 9%</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="kirchensteuer" data-controls="kirchensteuer-details">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div id="kirchensteuer-details">
+                        <div class="pill-buttons" id="kirchensteuersatz-buttons">
+                            <button class="pill-btn active" data-value="0.09">9 %</button>
+                            <button class="pill-btn" data-value="0.08">8 %</button>
+                        </div>
+                    </div>
+
+                    <div class="info-group accent-red">
+                        <div class="info-row">
+                            <label>Effektiver Gesamtsteuersatz</label>
+                            <span class="info-display" id="gesamt-steuersatz">26.375 %</span>
+                        </div>
+                    </div>
+
+                    <div class="info-group accent-green">
+                        <div class="info-row">
+                            <label>Effektiv nach Teilfreistellung</label>
+                            <span class="info-display" id="nach-tfs">18.463 %</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-content" id="tab-entnahme">
@@ -216,6 +292,8 @@
 
     <footer class="site-footer">
         <p>&copy; 2026 Luis Robert Schulz</p>
+        <p>Keine Anlageberatung.</p>
+        <p>Alle Angaben ohne Gewähr. Steuerberechnungen sind vereinfacht.</p>
     </footer>
 
      <script src="script.js"></script>

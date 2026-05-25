@@ -249,6 +249,9 @@ label {
 .card.card-blue  { 
     border-color: color-mix(in srgb, var(--accent-blue) 50%, transparent); 
 }
+.card.card-red  { 
+    border-color: color-mix(in srgb, var(--accent-red) 50%, transparent); 
+}
 
 /* tab buttons */
 .tab-buttons {

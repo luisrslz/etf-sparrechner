@@ -563,7 +563,7 @@ function ewigeEntnahme(input, ergebnisse) {
     for (let jahr = 1; jahr <= input.laufzeit; ++jahr) {
         const kapital = berechneBruttoEndkapital({ ...input, laufzeit: jahr });
         if (kapital >= benoetigtesKapital) {
-            return formatDisplay(jahr, "Jahre");
+            return formatDisplay(jahr, "Jahren");
         }
     }
     

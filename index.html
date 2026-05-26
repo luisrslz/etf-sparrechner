@@ -101,7 +101,7 @@
                 <div class="input-group accent-green" data-einheit="%" data-max="20" id="erhoehung-group">
                     <div class="input-label-row">
                         <label for="erhoehung">Erhöhung p.a.</label>
-                        <span class="input-value-display" id="erhoehung-display">2,0 %</span>
+                        <span class="input-value-display" id="erhoehung-display">2.0 %</span>
                     </div>
                     <div class="slider-row">
                         <input type="range" id="erhoehung" min="0.1" max="10" step="0.1" value="2">
@@ -254,8 +254,62 @@
                 </div>
             </div>
 
+            <!-- Entnahmetab -->
             <div class="tab-content" id="tab-entnahme">
-                <p>Entnahme Berechnung...</p>
+
+                <p class="section-title">Entnahmephase</p>
+
+                <div class="input-group accent-orange" data-einheit="€/Mo" data-max="30000">
+                    <div class="input-label-row">
+                        <label>Gewünschte Entnahme/Monat</label>
+                        <span class="input-value-display" id="entnahme-display">2.000 €/Mo.</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="entnahme" min="100" max="10000" step="100" value="2000">
+                        <input type="number" id="entnahme-num" min="0" step="100" value="2000">
+                    </div>
+                </div>
+
+                <div class="input-group accent-orange" data-einheit="%" data-max="20">
+                    <div class="input-label-row">
+                        <label>Bruttorendite in Entnahmephase</label>
+                        <span class="input-value-display" id="entnahme-rendite-display">4.0 %</span>
+                    </div>
+                    <div class="slider-row">
+                        <input type="range" id="entnahme-rendite" min="0" max="20" step="0.1" value="4">
+                        <input type="number" id="entnahme-rendite-num" min="0" step="0.1" value="4.0">
+                    </div>
+                </div>
+
+                <div class="entnahme-analyse">
+                    <span class="entnahme-analyse-title">Entnahmeanalyse</span>
+
+                    <p class="section-title">Geplante entnahme</p>
+                    <div class="ea-row">
+                        <span class="ea-label">Brutto nominal (in <span id="entnahme-jahr">2056</span>)</span>
+                        <span class="ea-value ea-orange" id="entnahme-brutto"> - </span>
+                    </div>
+                    <div class="ea-row ea-sub">
+                        <span class="ea-label">↳ Nach Steuer (netto)</span>
+                        <span class="ea-value ea-green" id="entnahme-netto"> - </span>
+                    </div>
+                    <div class="ea-row ea-sub">
+                        <span class="ea-label">↳ In heutiger Kaufkraft</span>
+                        <span class="ea-value ea-blue" id="entnahme-kaufkraft"> - </span>
+                    </div>
+
+                    <div class="section-divider"></div>
+                    <p class="section-title">Tragfähigkeit</p>
+
+                    <div class="ea-row">
+                        <span class="ea-label">Kapital hält</span>
+                        <span class="ea-value ea-green" id="kapital-haelt"> - </span>
+                    </div>
+                    <div class="ea-row">
+                        <span class="ea-label">Ewige Entnahme möglich ab</span>
+                        <span class="ea-value ea-green" id="ewige-entnahme"> - </span>
+                    </div>
+                </div>
             </div>
         </div>
 

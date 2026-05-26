@@ -519,3 +519,48 @@ select {
 .row-red     { color: var(--accent-red); }
 .row-current { color: var(--accent-orange); font-weight: 700; }
 .row-green   { color: var(--accent-green); }
+
+/* entnahme tab, analyse */
+.entnahme-analyse {
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.entnahme-analyse-title {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.entnahme-analyse .section-title {
+    margin-bottom: 0.5rem;
+}
+
+.ea-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem 0;
+}
+
+.ea-sub {
+    padding-left: 0.5rem;
+}
+
+.ea-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.ea-value {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.ea-green  { color: var(--accent-green); }
+.ea-blue   { color: var(--accent-blue); }
+.ea-orange { color: var(--accent-orange); }
+

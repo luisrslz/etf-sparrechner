@@ -560,16 +560,14 @@ function ewigeEntnahme(input, ergebnisse) {
         return "Nicht in Laufzeit";
     }
 
-    console.log(benoetigtesKapital, ergebnisse.bruttoEndkapital);
-
-    let ewigeEntnahme = 0;
-
     for (let jahr = 1; jahr <= input.laufzeit; ++jahr) {
         const kapital = berechneBruttoEndkapital({ ...input, laufzeit: jahr });
         if (kapital >= benoetigtesKapital) {
             return formatDisplay(jahr, "Jahre");
         }
     }
+    
+    return "-";
 }
 
 function main() {

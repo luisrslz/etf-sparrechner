@@ -474,3 +474,36 @@ select {
     margin-top: 0.25rem;
 }
 
+/* szenarien */
+.szenarien-table {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.szenarien-header, .szenarien-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.25rem;
+}
+
+/* szenario spalte bleibt linksbündig, rest rechtsbündig */
+.szenarien-header span:not(:first-child),
+.szenarien-row span:not(:first-child) {
+    text-align: right;
+}
+
+.szenarien-header {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.row-red     { color: var(--accent-red); }
+.row-current { color: var(--accent-orange); font-weight: 700; }
+.row-green   { color: var(--accent-green); }

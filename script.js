@@ -486,6 +486,34 @@ function zeichneKapitalzuwachs(verlauf) {
     });    
 }
 
+function aktualisiereVergleich(input, gesamtStSatz) {
+
+    const szenarien = [
+        { label: "-1 % Rendite (pessimistisch)", offset: -0.01, id: "sz-pessimistisch" },
+        { label: "Jetzige Einstellungen", offset: 0, id: "sz-aktuell" },
+        { label: "+1 % Rendite (optimistisch)", offset: 0.01, id: "sz-optimistisch" }
+    ];
+
+    szenarien.forEach(({ label, offset, id }) => {
+        const mod = {... input, bruttoRendite: input.bruttoRendite + offset};
+        const brutto = berechneBruttoEndkapital(mod);
+        const eingezahlt = berechneEingezahlt(mod);
+        const netto = berechneNettoEndkapital(mod, brutto, eingezahlt, gesamtStSatz);
+        const kaufkraft = netto / Math.pow(1 + mod.inflation, mod.laufzeit);
+        const faktor = kaufkraft / eingezahlt;
+
+
+        document.getElementById(id).innerHTML = `
+            <span>${label}</span>
+            <span>${formatEuro(brutto)}</span>
+            <span>${formatEuro(netto)}</span>
+            <span>${formatEuro(kaufkraft)}</span>
+            <span>${formatFaktor(faktor)}</span>
+
+        `;
+    });
+}
+
 function main() {
 
     updateColors();
@@ -523,6 +551,8 @@ function main() {
 
     const zuwachs = berechneZuwachs(input);
     zeichneKapitalzuwachs(zuwachs);
+
+    aktualisiereVergleich(input, gesamtStSatz);
 }
 
 // listener für slider + number-inputs

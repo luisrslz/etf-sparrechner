@@ -78,6 +78,7 @@ body {
 
 .github-link:hover {
     fill: var(--text-primary);
+    transform: scale(1.05);
 }
 
 /* "Sparrechner" im Titel in Orange */
@@ -102,8 +103,14 @@ body {
     cursor: pointer;
 }
 
+.theme-toggle:hover svg {
+    transform: scale(1.1);
+    fill: var(--text-primary);
+}
+
 .theme-toggle svg {
-    fill: var(--text-primary)
+    fill: var(--text-muted);
+    transition: 0.2s;
 }
 
 /* jeweils ein- und ausblenden */

@@ -68,6 +68,18 @@ body {
     margin-bottom: 0.1rem;
 }
 
+.github-link {
+    color: var(--text-muted);
+    transition: 0.2s;
+    margin-top: 0.5rem;
+    display: inline-block;
+    fill: var(--text-muted)
+}
+
+.github-link:hover {
+    fill: var(--text-primary);
+}
+
 /* "Sparrechner" im Titel in Orange */
 .highlight {
     color: var(--accent-orange);

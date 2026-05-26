@@ -54,8 +54,8 @@ function berechneEingezahlt(input) {
 // Sparratenverlaufs-Balken
 function zeichneBalken(input) {
 
-    const verlaufContainer = document.getElementById('sparraten-verlauf');
-    verlaufContainer.innerHTML = '';
+    const verlaufContainer = document.getElementById("sparraten-verlauf");
+    verlaufContainer.innerHTML = "";
 
     const balken = input.laufzeit < 5 ? input.laufzeit : 5;
     const maxRate = input.monatlicheEinzahlung * Math.pow(1 + input.erhoehung, input.laufzeit - 1);
@@ -82,28 +82,28 @@ function formatEuro(wert) {
 
     if (wert > 1_000_000_000) {
         const mrd = wert / 1_000_000_000;
-        return mrd.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Mrd. €';
+        return mrd.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " Mrd. €";
     }
     if (wert >= 1_000_000) {
         const mio = wert / 1_000_000;
-        return mio.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Mio. €';
+        return mio.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " Mio. €";
     }
 
-    return wert.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' €';
+    return wert.toLocaleString("de-DE", { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " €";
 }
 
 function formatFaktor(wert) {
 
-    return wert.toLocaleString('de-DE', {
+    return wert.toLocaleString("de-DE", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-    }) + '×';
+    }) + "×";
 }
 
 function formatDisplay(wert, einheit) {
 
-    if (einheit === '€') return Number(wert).toLocaleString('de-DE') + ' €';
-    if (einheit === "€/Mo") return Number(wert).toLocaleString('de-DE', {maximumFractionDigits: 2}) + " €/Mo.";
+    if (einheit === "€") return Number(wert).toLocaleString("de-DE") + " €";
+    if (einheit === "€/Mo") return Number(wert).toLocaleString("de-DE", {maximumFractionDigits: 2}) + " €/Mo.";
 
     return wert + " " + einheit;
 }
@@ -116,17 +116,17 @@ function anzeigenAktualisieren(input, ergebnisse) {
     document.getElementById("nettorendite-display").textContent = formatDisplay((nettoRendite * 100).toFixed(2), "%");
 
     // für subtitle inflation im ergebnis kaufkraft
-    document.getElementById('inflationsrate-display').textContent = (input.inflation * 100).toFixed(1); 
+    document.getElementById("inflationsrate-display").textContent = (input.inflation * 100).toFixed(1); 
 
     // einzahlungen card subtitle
-    document.getElementById('gesamteinzahlungen-sub').textContent = formatDisplay((ergebnisse.eingezahlt / ergebnisse.nettoEndkapital * 100).toFixed(1), "%");
+    document.getElementById("gesamteinzahlungen-sub").textContent = formatDisplay((ergebnisse.eingezahlt / ergebnisse.nettoEndkapital * 100).toFixed(1), "%");
 
     const zinsgewinneBrutto = (ergebnisse.bruttoEndkapital - ergebnisse.eingezahlt) / ergebnisse.bruttoEndkapital * 100;
     // zinsgewinne brutto card subtitle
-    document.getElementById('zinsgewinne-brutto-sub').textContent = formatDisplay(zinsgewinneBrutto.toFixed(1), "%");
+    document.getElementById("zinsgewinne-brutto-sub").textContent = formatDisplay(zinsgewinneBrutto.toFixed(1), "%");
 
     // ter-verlust subtitle
-    document.getElementById('ter-sub').textContent = formatDisplay((input.ter * 100).toFixed(2), "%");
+    document.getElementById("ter-sub").textContent = formatDisplay((input.ter * 100).toFixed(2), "%");
 
     // realrendite info aktualisieren
     const realRendite = nettoRendite - input.inflation;
@@ -134,24 +134,24 @@ function anzeigenAktualisieren(input, ergebnisse) {
 
     const nachTFS = ergebnisse.gesamtStSatz * (1 - input.tfs);
     if (input.steuerAktiv) {
-        document.getElementById('gesamt-steuersatz').textContent = formatDisplay((ergebnisse.gesamtStSatz * 100).toFixed(3), "%");
-        document.getElementById('nach-tfs').textContent = formatDisplay((nachTFS * 100).toFixed(3), "%");
-        document.getElementById('tfs-sub').textContent = formatDisplay((nachTFS * 100).toFixed(2), "%");
+        document.getElementById("gesamt-steuersatz").textContent = formatDisplay((ergebnisse.gesamtStSatz * 100).toFixed(3), "%");
+        document.getElementById("nach-tfs").textContent = formatDisplay((nachTFS * 100).toFixed(3), "%");
+        document.getElementById("tfs-sub").textContent = formatDisplay((nachTFS * 100).toFixed(2), "%");
     } else {
-        document.getElementById('gesamt-steuersatz').textContent = '-';
-        document.getElementById('nach-tfs').textContent = '-';
-        document.getElementById('tfs-sub').textContent = '0 %';
+        document.getElementById("gesamt-steuersatz").textContent = "-";
+        document.getElementById("nach-tfs").textContent = "-";
+        document.getElementById("tfs-sub").textContent = "0 %";
     }
 
     // result panel ausgeben
-    document.getElementById('endkapital-brutto').textContent = formatEuro(ergebnisse.bruttoEndkapital);
-    document.getElementById('endkapital-netto').textContent = formatEuro(ergebnisse.nettoEndkapital);
-    document.getElementById('kaufkraft').textContent = formatEuro(ergebnisse.kaufkraft);
-    document.getElementById('kapitalfaktor').textContent = formatFaktor(ergebnisse.faktor);
-    document.getElementById('gesamteinzahlungen').textContent = formatEuro(ergebnisse.eingezahlt);
-    document.getElementById('zinsgewinne-brutto').textContent = formatEuro(ergebnisse.bruttoEndkapital - ergebnisse.eingezahlt);
-    document.getElementById('steuerbelastung').textContent = formatEuro((ergebnisse.bruttoEndkapital - ergebnisse.nettoEndkapital));
-    document.getElementById('ter-verlust').textContent = formatEuro(ergebnisse.endkapitalOhneTER - ergebnisse.bruttoEndkapital);
+    document.getElementById("endkapital-brutto").textContent = formatEuro(ergebnisse.bruttoEndkapital);
+    document.getElementById("endkapital-netto").textContent = formatEuro(ergebnisse.nettoEndkapital);
+    document.getElementById("kaufkraft").textContent = formatEuro(ergebnisse.kaufkraft);
+    document.getElementById("kapitalfaktor").textContent = formatFaktor(ergebnisse.faktor);
+    document.getElementById("gesamteinzahlungen").textContent = formatEuro(ergebnisse.eingezahlt);
+    document.getElementById("zinsgewinne-brutto").textContent = formatEuro(ergebnisse.bruttoEndkapital - ergebnisse.eingezahlt);
+    document.getElementById("steuerbelastung").textContent = formatEuro((ergebnisse.bruttoEndkapital - ergebnisse.nettoEndkapital));
+    document.getElementById("ter-verlust").textContent = formatEuro(ergebnisse.endkapitalOhneTER - ergebnisse.bruttoEndkapital);
 
     // entnahme-tab
 
@@ -170,14 +170,14 @@ function anzeigenAktualisieren(input, ergebnisse) {
 
 function updateColors() {
     colors = {
-    orange: style.getPropertyValue('--accent-orange'),
-    green: style.getPropertyValue('--accent-green'),
-    blue: style.getPropertyValue('--accent-blue'),
-    muted: style.getPropertyValue('--text-muted'),
-    primary: style.getPropertyValue('--text-primary'),
-    grid: style.getPropertyValue('--border') + '66', // opacity 40% durch 66
-    bgCard: style.getPropertyValue('--bg-card'),
-    border: style.getPropertyValue('--border'),
+    orange: style.getPropertyValue("--accent-orange"),
+    green: style.getPropertyValue("--accent-green"),
+    blue: style.getPropertyValue("--accent-blue"),
+    muted: style.getPropertyValue("--text-muted"),
+    primary: style.getPropertyValue("--text-primary"),
+    grid: style.getPropertyValue("--border") + "66", // opacity 40% durch 66
+    bgCard: style.getPropertyValue("--bg-card"),
+    border: style.getPropertyValue("--border"),
     };
 }
 
@@ -196,11 +196,11 @@ function leseInputs() {
         bruttoRendite:       parseFloat(document.getElementById("bruttorendite-num").value) / 100,
         ter:                 parseFloat(document.getElementById("ter-kosten-num").value) / 100,
         inflation:           parseFloat(document.getElementById("inflation-num").value) / 100,
-        steuerAktiv:         document.getElementById('abgeltungssteuer').checked,
-        tfs:                 parseFloat(document.getElementById('etf-typ').value),
-        sparerpauschbetrag:  parseFloat(document.querySelector('#sparerpauschbetrag-buttons .pill-btn.active').dataset.value),
-        kirchensteuerAktiv:  document.getElementById('kirchensteuer').checked,
-        kirchensteuersatz:   parseFloat(document.querySelector('#kirchensteuersatz-buttons .pill-btn.active').dataset.value),
+        steuerAktiv:         document.getElementById("abgeltungssteuer").checked,
+        tfs:                 parseFloat(document.getElementById("etf-typ").value),
+        sparerpauschbetrag:  parseFloat(document.querySelector("#sparerpauschbetrag-buttons .pill-btn.active").dataset.value),
+        kirchensteuerAktiv:  document.getElementById("kirchensteuer").checked,
+        kirchensteuersatz:   parseFloat(document.querySelector("#kirchensteuersatz-buttons .pill-btn.active").dataset.value),
         entnahme:            parseInt(document.getElementById("entnahme-num").value),
         renditeEntnahme:     parseFloat(document.getElementById("entnahme-rendite-num").value) / 100,
     };
@@ -231,14 +231,14 @@ function berechneJahresverlauf(input, gesamtStSatz) {
 
 const style = getComputedStyle(document.documentElement);
 let colors = {
-    orange: style.getPropertyValue('--accent-orange'),
-    green: style.getPropertyValue('--accent-green'),
-    blue: style.getPropertyValue('--accent-blue'),
-    muted: style.getPropertyValue('--text-muted'),
-    primary: style.getPropertyValue('--text-primary'),
-    grid: style.getPropertyValue('--border') + '66', // opacity 40% durch 66
-    bgCard: style.getPropertyValue('--bg-card'),
-    border: style.getPropertyValue('--border'),
+    orange: style.getPropertyValue("--accent-orange"),
+    green: style.getPropertyValue("--accent-green"),
+    blue: style.getPropertyValue("--accent-blue"),
+    muted: style.getPropertyValue("--text-muted"),
+    primary: style.getPropertyValue("--text-primary"),
+    grid: style.getPropertyValue("--border") + "66", // opacity 40% durch 66
+    bgCard: style.getPropertyValue("--bg-card"),
+    border: style.getPropertyValue("--border"),
 };
 
 let lineChart = null;
@@ -275,41 +275,41 @@ function zeichneVermoegensverlauf(verlauf) {
         return;
     }
 
-    lineChart = new Chart(document.getElementById('vermoegens-chart'), {
-        type: 'line',
+    lineChart = new Chart(document.getElementById("vermoegens-chart"), {
+        type: "line",
         data: {
             labels: verlauf.labels,
             datasets: [
                 {
-                    label: 'Brutto',
+                    label: "Brutto",
                     data: verlauf.dataBrutto,
                     backgroundColor: colors.orange,
                     pointRadius: 0,
-                    pointStyle: 'rect'
+                    pointStyle: "rect"
                 },
                 {
-                    label: 'Netto',
+                    label: "Netto",
                     data: verlauf.dataNetto,  
                     backgroundColor: colors.green,    
                     pointRadius: 0,
-                    pointStyle: 'rect'
+                    pointStyle: "rect"
                 },
                 {
-                    label: 'Kaufkraftbereinigt',
+                    label: "Kaufkraftbereinigt",
                     data: verlauf.dataKaufkraft,
                     backgroundColor: colors.blue,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointStyle: 'rect'
+                    pointStyle: "rect"
                 },
                 {
-                    label: 'Eingezahlt',
+                    label: "Eingezahlt",
                     data: verlauf.dataEingezahlt,
                     backgroundColor: colors.muted,
                     borderColor: colors.muted,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointStyle: 'rect'
+                    pointStyle: "rect"
                 },
             ]
         },
@@ -318,8 +318,8 @@ function zeichneVermoegensverlauf(verlauf) {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'top',
-                    align: 'end',
+                    position: "top",
+                    align: "end",
                     labels: { 
                         color: colors.muted, 
                         usePointStyle: true, 
@@ -341,7 +341,7 @@ function zeichneVermoegensverlauf(verlauf) {
                             if (wert >= 1_000_000) {
                                 return ` ${label}: ${(wert / 1_000_000).toFixed(2)} Mio. €`;
                             }
-                            return ` ${label}: ${Math.round(wert).toLocaleString('de-DE')} €`;
+                            return ` ${label}: ${Math.round(wert).toLocaleString("de-DE")} €`;
                             }
                     }
                 }
@@ -355,14 +355,14 @@ function zeichneVermoegensverlauf(verlauf) {
                     ticks: {
                         color: colors.muted,
                         callback: val => val >= 1_000_000
-                            ? (val / 1_000_000).toFixed(1) + 'M €'
-                            : (val / 1_000).toFixed(0) + 'K €'
+                            ? (val / 1_000_000).toFixed(1) + "M €"
+                            : (val / 1_000).toFixed(0) + "K €"
                     },
                     grid: { color: colors.grid, display: true},
                 }
             },
             interaction: {
-                mode: 'index',
+                mode: "index",
                 intersect: false,
             }
         }
@@ -421,22 +421,22 @@ function zeichneKapitalzuwachs(verlauf) {
         return;
     }
 
-    barChart = new Chart(document.getElementById('zuwachs-chart'), {
-        type: 'bar',
+    barChart = new Chart(document.getElementById("zuwachs-chart"), {
+        type: "bar",
         data: {
             labels: verlauf.labels,
             datasets: [
                 {
-                    label: 'Zinsen',
+                    label: "Zinsen",
                     data: verlauf.dataZinsen,
                     backgroundColor: colors.orange,
-                    pointStyle: 'rect'
+                    pointStyle: "rect"
                 },
                 {
-                    label: 'Eingezahlt',
+                    label: "Eingezahlt",
                     data: verlauf.dataEinzahlungen,
                     backgroundColor: colors.green,
-                    pointStyle: 'rect'
+                    pointStyle: "rect"
                 }
             ]
         },
@@ -445,8 +445,8 @@ function zeichneKapitalzuwachs(verlauf) {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'top',
-                    align: 'end',
+                    position: "top",
+                    align: "end",
                     labels: { 
                         color: colors.muted, 
                         usePointStyle: true, 
@@ -468,7 +468,7 @@ function zeichneKapitalzuwachs(verlauf) {
                             if (wert >= 1_000_000) {
                                 return ` ${label}: ${(wert / 1_000_000).toFixed(2)} Mio. €`;
                             }
-                            return ` ${label}: ${Math.round(wert).toLocaleString('de-DE')} €`;
+                            return ` ${label}: ${Math.round(wert).toLocaleString("de-DE")} €`;
                             }
                     }
                 }
@@ -483,15 +483,15 @@ function zeichneKapitalzuwachs(verlauf) {
                     ticks: {
                         color: colors.muted,
                         callback: val => val >= 1_000_000
-                            ? (val / 1_000_000).toFixed(1) + 'M €'
-                            : (val / 1_000).toFixed(0) + 'K €'
+                            ? (val / 1_000_000).toFixed(1) + "M €"
+                            : (val / 1_000).toFixed(0) + "K €"
                     },
                     grid: { color: colors.grid, display: true},
                     stacked: true,
                 }
             },
             interaction: {
-                mode: 'index',
+                mode: "index",
                 intersect: false,
             }
         }
@@ -617,24 +617,24 @@ function main() {
 }
 
 // listener für slider + number-inputs
-document.querySelectorAll('.input-group').forEach(gruppe => {
+document.querySelectorAll(".input-group").forEach(gruppe => {
 
     const einheit = gruppe.dataset.einheit;
-    const slider = gruppe.querySelector('input[type="range"]');
-    const num = gruppe.querySelector('input[type="number"]')
-    const display = gruppe.querySelector('.input-value-display');
+    const slider = gruppe.querySelector("input[type='range']");
+    const num = gruppe.querySelector("input[type='number']");
+    const display = gruppe.querySelector(".input-value-display");
 
     const max = parseFloat(gruppe.dataset.max) || Infinity; // wenn nichts festgelegt ist kein Limit
 
     if (!slider || !num) return; // -> dropdown crasht das skript sonst
 
-    slider.addEventListener('input', () => {
+    slider.addEventListener("input", () => {
         num.value = slider.value;
         display.textContent = formatDisplay(slider.value, einheit);
         main();
     });
 
-    num.addEventListener('input', () => {
+    num.addEventListener("input", () => {
         if (parseFloat(num.value) > max) {
             num.value = max;
         }
@@ -646,52 +646,52 @@ document.querySelectorAll('.input-group').forEach(gruppe => {
 });
 
 //listener für tab-buttons
-document.querySelectorAll('.tab-btn').forEach(btn => {
+document.querySelectorAll(".tab-btn").forEach(btn => {
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener("click", () => {
         
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
 
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
 
-        btn.classList.add('active');
+        btn.classList.add("active");
 
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
     });
 });
 
 // listener für theme-toggle
-document.getElementById('theme-toggle').addEventListener('click', () => {
+document.getElementById("theme-toggle").addEventListener("click", () => {
     const html = document.documentElement;
-    if (html.dataset.theme === 'light') {
-        html.dataset.theme = 'dark';
+    if (html.dataset.theme === "light") {
+        html.dataset.theme = "dark";
     } else {
-        html.dataset.theme = 'light';
+        html.dataset.theme = "light";
     }   
     main();
 });
 
 // listener für toggle, die slider aktivieren/deaktivieren
-document.querySelectorAll('input[type="checkbox"][data-controls]').forEach(toggle => {
+document.querySelectorAll("input[type='checkbox'][data-controls]").forEach(toggle => {
 
     const target = document.getElementById(toggle.dataset.controls);
 
     function updateToggle() {
-        target.classList.toggle('disabled', !toggle.checked); 
+        target.classList.toggle("disabled", !toggle.checked); 
         main(); // -> hier nochmal aufrufen
     }
 
-    toggle.addEventListener('change', updateToggle);
+    toggle.addEventListener("change", updateToggle);
     updateToggle();
 });
 
 /* listener für pill-buttons */
-document.querySelectorAll('.pill-buttons').forEach(gruppe => {
+document.querySelectorAll(".pill-buttons").forEach(gruppe => {
 
-    gruppe.querySelectorAll('.pill-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            gruppe.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    gruppe.querySelectorAll(".pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            gruppe.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
             main();
         });
 
@@ -699,6 +699,6 @@ document.querySelectorAll('.pill-buttons').forEach(gruppe => {
 });
 
 // etf-typ ändert sich -> neu rechnen
-document.getElementById('etf-typ').addEventListener('change', main);
+document.getElementById("etf-typ").addEventListener("change", main);
 
 main(); // garantieren

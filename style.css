@@ -11,7 +11,7 @@
     --accent-orange: #f69e67; /* Titel, und Neutrales */
     --accent-red: #ed8796; /* Negatives: Steuern, usw. */
     --accent-blue: #8aadf4;
-    --font: 'Inter', sans-serif;
+    --font: "Inter", sans-serif;
 }
 
 /* light mode farben */
@@ -50,7 +50,7 @@ body {
 }
 
 .site-header h1 {
-    font-family: 'Syne', 'Inter', sans-serif;
+    font-family: "Syne", "Inter", sans-serif;
     font-size: 3rem;
     font-weight: 900;
     letter-spacing: -1px;
@@ -370,7 +370,7 @@ label {
 }
 
 .toggle-slider::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 18px;
     height: 18px;

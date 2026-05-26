@@ -103,10 +103,9 @@ function formatFaktor(wert) {
 function formatDisplay(wert, einheit) {
 
     if (einheit === '€') return Number(wert).toLocaleString('de-DE') + ' €';
-    if (einheit === 'Jahre') return wert + ' Jahre';
-    if (einheit === '%') return wert + ' %';
+    if (einheit === "€/Mo") return Number(wert).toLocaleString('de-DE', {maximumFractionDigits: 2}) + " €/Mo.";
 
-    return wert;
+    return wert + " " + einheit;
 }
 
 // aktualisiert alle infos im info-panel und result-panel 
@@ -153,6 +152,20 @@ function anzeigenAktualisieren(input, ergebnisse) {
     document.getElementById('zinsgewinne-brutto').textContent = formatEuro(ergebnisse.bruttoEndkapital - ergebnisse.eingezahlt);
     document.getElementById('steuerbelastung').textContent = formatEuro((ergebnisse.bruttoEndkapital - ergebnisse.nettoEndkapital));
     document.getElementById('ter-verlust').textContent = formatEuro(ergebnisse.endkapitalOhneTER - ergebnisse.bruttoEndkapital);
+
+    // entnahme-tab
+
+    const entnahmeJahr = new Date().getFullYear() + input.laufzeit;
+    document.getElementById("entnahme-jahr").textContent = entnahmeJahr;
+    document.getElementById("entnahme-brutto").textContent = formatDisplay(input.entnahme, "€/Mo");
+    const netto = input.steuerAktiv ? input.entnahme - (input.entnahme * nachTFS) : input.entnahme;
+    document.getElementById("entnahme-netto").textContent = formatDisplay(netto, "€/Mo");
+    const kaufkraft = netto / Math.pow(1 + input.inflation, input.laufzeit);
+    document.getElementById("entnahme-kaufkraft").textContent = formatDisplay(kaufkraft, "€/Mo");
+
+    document.getElementById("kapital-haelt").textContent = ergebnisse.entnahmeJahre;
+    document.getElementById("ewige-entnahme").textContent = ergebnisse.ewigeEntnahme;
+
 }
 
 function updateColors() {
@@ -188,6 +201,8 @@ function leseInputs() {
         sparerpauschbetrag:  parseFloat(document.querySelector('#sparerpauschbetrag-buttons .pill-btn.active').dataset.value),
         kirchensteuerAktiv:  document.getElementById('kirchensteuer').checked,
         kirchensteuersatz:   parseFloat(document.querySelector('#kirchensteuersatz-buttons .pill-btn.active').dataset.value),
+        entnahme:            parseInt(document.getElementById("entnahme-num").value),
+        renditeEntnahme:     parseFloat(document.getElementById("entnahme-rendite-num").value) / 100,
     };
 }
 
@@ -511,6 +526,52 @@ function aktualisiereVergleich(input, gesamtStSatz) {
     });
 }
 
+function analysiereTragfaehigkeit(input, ergebnisse) {
+
+    let endKapital = ergebnisse.bruttoEndkapital;
+
+    // zählen wie lange das kapital hält.
+    let jahre = 0;
+    let ausgangsKapital = endKapital;
+    while (true) {
+
+        if (jahre > 150) { // endless loop verhindern
+            break;
+        }
+
+        endKapital *= (1 + input.renditeEntnahme);
+        endKapital -= 12 * input.entnahme;
+        if (endKapital <= 0) break;
+
+        if (endKapital >= ausgangsKapital) {
+            return "Ewig ∞";
+        }
+        ++jahre;
+    }
+
+    return jahre + " Jahre";
+}
+
+function ewigeEntnahme(input, ergebnisse) {
+
+    const benoetigtesKapital = (input.entnahme * 12) / input.renditeEntnahme;
+
+    if (benoetigtesKapital > ergebnisse.bruttoEndkapital) {
+        return "Nicht in Laufzeit";
+    }
+
+    console.log(benoetigtesKapital, ergebnisse.bruttoEndkapital);
+
+    let ewigeEntnahme = 0;
+
+    for (let jahr = 1; jahr <= input.laufzeit; ++jahr) {
+        const kapital = berechneBruttoEndkapital({ ...input, laufzeit: jahr });
+        if (kapital >= benoetigtesKapital) {
+            return formatDisplay(jahr, "Jahre");
+        }
+    }
+}
+
 function main() {
 
     updateColors();
@@ -539,9 +600,7 @@ function main() {
         kaufkraft,
         faktor, 
         endkapitalOhneTER
-    };
-
-    anzeigenAktualisieren(input, ergebnisse);
+    }; 
 
     const verlauf = berechneJahresverlauf(input, gesamtStSatz);
     zeichneVermoegensverlauf(verlauf);
@@ -550,6 +609,11 @@ function main() {
     zeichneKapitalzuwachs(zuwachs);
 
     aktualisiereVergleich(input, gesamtStSatz);
+
+    ergebnisse.entnahmeJahre = analysiereTragfaehigkeit(input, ergebnisse);
+    ergebnisse.ewigeEntnahme = ewigeEntnahme(input, ergebnisse);
+
+    anzeigenAktualisieren(input, ergebnisse);
 }
 
 // listener für slider + number-inputs

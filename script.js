@@ -230,9 +230,6 @@ let lineChart = null;
 
 function zeichneVermoegensverlauf(verlauf) {
 
-    const style = getComputedStyle(document.documentElement);
-    
-
     if (lineChart) {
         // daten updaten
         lineChart.data.labels = verlauf.labels;

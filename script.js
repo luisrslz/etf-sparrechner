@@ -80,6 +80,10 @@ function zeichneBalken(input) {
 // schöner ausgeben
 function formatEuro(wert) {
 
+    if (wert > 1_000_000_000) {
+        const mrd = wert / 1_000_000_000;
+        return mrd.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Mrd. €';
+    }
     if (wert >= 1_000_000) {
         const mio = wert / 1_000_000;
         return mio.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Mio. €';

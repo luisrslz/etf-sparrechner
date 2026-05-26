@@ -155,6 +155,19 @@ function anzeigenAktualisieren(input, ergebnisse) {
     document.getElementById('ter-verlust').textContent = formatEuro(ergebnisse.endkapitalOhneTER - ergebnisse.bruttoEndkapital);
 }
 
+function updateColors() {
+    colors = {
+    orange: style.getPropertyValue('--accent-orange'),
+    green: style.getPropertyValue('--accent-green'),
+    blue: style.getPropertyValue('--accent-blue'),
+    muted: style.getPropertyValue('--text-muted'),
+    primary: style.getPropertyValue('--text-primary'),
+    grid: style.getPropertyValue('--border') + '66', // opacity 40% durch 66
+    bgCard: style.getPropertyValue('--bg-card'),
+    border: style.getPropertyValue('--border'),
+    };
+}
+
 // einlesen aller inputs
 function leseInputs() {
 
@@ -201,39 +214,56 @@ function berechneJahresverlauf(input, gesamtStSatz) {
     return { labels, dataBrutto, dataNetto, dataKaufkraft, dataEingezahlt };
 }
 
-let chart = null;
+const style = getComputedStyle(document.documentElement);
+let colors = {
+    orange: style.getPropertyValue('--accent-orange'),
+    green: style.getPropertyValue('--accent-green'),
+    blue: style.getPropertyValue('--accent-blue'),
+    muted: style.getPropertyValue('--text-muted'),
+    primary: style.getPropertyValue('--text-primary'),
+    grid: style.getPropertyValue('--border') + '66', // opacity 40% durch 66
+    bgCard: style.getPropertyValue('--bg-card'),
+    border: style.getPropertyValue('--border'),
+};
+
+let lineChart = null;
 
 function zeichneVermoegensverlauf(verlauf) {
 
     const style = getComputedStyle(document.documentElement);
-    const orange = style.getPropertyValue('--accent-orange');
-    const green  = style.getPropertyValue('--accent-green');
-    const blue   = style.getPropertyValue('--accent-blue');
-    const muted  = style.getPropertyValue('--text-muted');
-    const primary = style.getPropertyValue('--text-primary');
-    const grid = style.getPropertyValue('--border').trim() + '66'; // opacity 40% durch 66
+    
 
-    if (chart) {
+    if (lineChart) {
         // daten updaten
-        chart.data.labels = verlauf.labels;
-        chart.data.datasets[0].data = verlauf.dataBrutto;
-        chart.data.datasets[1].data = verlauf.dataNetto;
-        chart.data.datasets[2].data = verlauf.dataKaufkraft;
-        chart.data.datasets[3].data = verlauf.dataEingezahlt;
+        lineChart.data.labels = verlauf.labels;
+        lineChart.data.datasets[0].data = verlauf.dataBrutto;
+        lineChart.data.datasets[1].data = verlauf.dataNetto;
+        lineChart.data.datasets[2].data = verlauf.dataKaufkraft;
+        lineChart.data.datasets[3].data = verlauf.dataEingezahlt;
         
         // farben bei theme-wechsel updaten
-        chart.data.datasets[0].borderColor = orange;
-        chart.data.datasets[1].borderColor = green;
-        chart.data.datasets[2].borderColor = blue;
-        chart.data.datasets[3].borderColor = muted;
-        chart.options.scales.x.ticks.color = muted;
-        chart.options.scales.y.ticks.color = muted;
-        chart.options.scales.y.grid.color = grid;
-        chart.update();
+        lineChart.data.datasets[0].backgroundColor = colors.orange;
+        lineChart.data.datasets[1].backgroundColor = colors.green;
+        lineChart.data.datasets[2].backgroundColor = colors.blue;
+        lineChart.data.datasets[3].backgroundColor = colors.muted;
+        lineChart.data.datasets[0].borderColor = colors.orange;
+        lineChart.data.datasets[1].borderColor = colors.green;
+        lineChart.data.datasets[2].borderColor = colors.blue;
+        lineChart.data.datasets[3].borderColor = colors.muted;
+        lineChart.options.scales.x.ticks.color = colors.muted;
+        lineChart.options.scales.y.ticks.color = colors.muted;
+        lineChart.options.scales.x.grid.color = colors.grid;
+        lineChart.options.scales.y.grid.color = colors.grid;
+        lineChart.options.plugins.legend.labels.color = colors.muted;
+        lineChart.options.plugins.tooltip.backgroundColor = colors.bgCard;
+        lineChart.options.plugins.tooltip.titleColor = colors.muted;
+        lineChart.options.plugins.tooltip.bodyColor = colors.primary;
+        lineChart.options.plugins.tooltip.borderColor = colors.border;
+        lineChart.update();
         return;
     }
 
-    chart = new Chart(document.getElementById('vermoegens-chart'), {
+    lineChart = new Chart(document.getElementById('vermoegens-chart'), {
         type: 'line',
         data: {
             labels: verlauf.labels,
@@ -241,18 +271,21 @@ function zeichneVermoegensverlauf(verlauf) {
                 {
                     label: 'Brutto',
                     data: verlauf.dataBrutto,
+                    backgroundColor: colors.orange,
                     pointRadius: 0,
                     pointStyle: 'rect'
                 },
                 {
                     label: 'Netto',
-                    data: verlauf.dataNetto,      
+                    data: verlauf.dataNetto,  
+                    backgroundColor: colors.green,    
                     pointRadius: 0,
                     pointStyle: 'rect'
                 },
                 {
                     label: 'Kaufkraftbereinigt',
                     data: verlauf.dataKaufkraft,
+                    backgroundColor: colors.blue,
                     borderDash: [5, 5],
                     pointRadius: 0,
                     pointStyle: 'rect'
@@ -260,7 +293,8 @@ function zeichneVermoegensverlauf(verlauf) {
                 {
                     label: 'Eingezahlt',
                     data: verlauf.dataEingezahlt,
-                    borderColor: muted,
+                    backgroundColor: colors.muted,
+                    borderColor: colors.muted,
                     borderDash: [5, 5],
                     pointRadius: 0,
                     pointStyle: 'rect'
@@ -275,17 +309,17 @@ function zeichneVermoegensverlauf(verlauf) {
                     position: 'top',
                     align: 'end',
                     labels: { 
-                        color: muted, 
+                        color: colors.muted, 
                         usePointStyle: true, 
                         boxWidth: 12,
                         boxHeight: 12,
                     },
                 },
                 tooltip: {
-                    backgroundColor: style.getPropertyValue('--bg-card').trim(),
-                    titleColor: muted,
-                    bodyColor: style.getPropertyValue('--text-primary').trim(),
-                    borderColor: style.getPropertyValue('--border').trim(),
+                    backgroundColor: colors.bgCard,
+                    titleColor: colors.muted,
+                    bodyColor: colors.primary,
+                    borderColor: colors.border,
                     borderWidth: 1,
                     // tooltip zahlen formatieren
                     callbacks: {
@@ -302,17 +336,17 @@ function zeichneVermoegensverlauf(verlauf) {
             },
             scales: {
                 x: {
-                    ticks: { color: muted, maxTicksLimit: 10 },
-                    grid: { display: true, color: grid },
+                    ticks: { color: colors.muted, maxTicksLimit: 10 },
+                    grid: { display: true, color: colors.grid },
                 },
                 y: {
                     ticks: {
-                        color: muted,
+                        color: colors.muted,
                         callback: val => val >= 1_000_000
                             ? (val / 1_000_000).toFixed(1) + 'M €'
                             : (val / 1_000).toFixed(0) + 'K €'
                     },
-                    grid: { color: grid, display: true},
+                    grid: { color: colors.grid, display: true},
                 }
             },
             interaction: {
@@ -323,7 +357,138 @@ function zeichneVermoegensverlauf(verlauf) {
     });
 }
 
+function berechneZuwachs(input) {
+
+    const labels = [], dataZinsen = [], dataEinzahlungen = [];
+
+    let bruttoVorher = input.startkapital;
+    let eingezahltVorher = input.startkapital;
+
+    for (let jahr = 0; jahr < input.laufzeit; jahr++) {
+        
+        const bruttoJetzt = berechneBruttoEndkapital({ ...input, laufzeit: jahr + 1 });
+        const eingezahltJetzt = berechneEingezahlt({ ...input, laufzeit: jahr + 1 });
+
+        const einzahlungenDesJahres = eingezahltJetzt - eingezahltVorher;
+        const zinsenDesJahres = bruttoJetzt - bruttoVorher - einzahlungenDesJahres;
+
+        labels.push(`J${jahr + 1}`);
+        dataZinsen.push(zinsenDesJahres);
+        dataEinzahlungen.push(einzahlungenDesJahres);
+
+        bruttoVorher = bruttoJetzt;
+        eingezahltVorher = eingezahltJetzt;
+    }
+
+    return { labels, dataZinsen, dataEinzahlungen };
+
+}
+
+let barChart = null;
+
+function zeichneKapitalzuwachs(verlauf) {
+
+    if (barChart) {
+        barChart.data.labels = verlauf.labels;
+        barChart.data.datasets[0].data = verlauf.dataZinsen;
+        barChart.data.datasets[1].data = verlauf.dataEinzahlungen;
+
+        // theme update...
+        barChart.data.datasets[0].backgroundColor = colors.orange;
+        barChart.data.datasets[1].backgroundColor = colors.green;
+        barChart.options.scales.x.ticks.color = colors.muted;
+        barChart.options.scales.y.ticks.color = colors.muted;
+        barChart.options.scales.x.grid.color = colors.grid;
+        barChart.options.scales.y.grid.color = colors.grid;
+        barChart.options.plugins.legend.labels.color = colors.muted;
+        barChart.options.plugins.tooltip.backgroundColor = colors.bgCard;
+        barChart.options.plugins.tooltip.titleColor = colors.muted;
+        barChart.options.plugins.tooltip.bodyColor = colors.primary;
+        barChart.options.plugins.tooltip.borderColor = colors.border;
+        barChart.update();
+        return;
+    }
+
+    barChart = new Chart(document.getElementById('zuwachs-chart'), {
+        type: 'bar',
+        data: {
+            labels: verlauf.labels,
+            datasets: [
+                {
+                    label: 'Zinsen',
+                    data: verlauf.dataZinsen,
+                    backgroundColor: colors.orange,
+                    pointStyle: 'rect'
+                },
+                {
+                    label: 'Eingezahlt',
+                    data: verlauf.dataEinzahlungen,
+                    backgroundColor: colors.green,
+                    pointStyle: 'rect'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    align: 'end',
+                    labels: { 
+                        color: colors.muted, 
+                        usePointStyle: true, 
+                        boxWidth: 12,
+                        boxHeight: 12,
+                    },
+                },
+                tooltip: {
+                    backgroundColor: colors.bgCard,
+                    titleColor: colors.muted,
+                    bodyColor: colors.primary,
+                    borderColor: colors.border,
+                    borderWidth: 1,
+                    // tooltip zahlen formatieren
+                    callbacks: {
+                        label: (ctx) => {
+                            const wert = ctx.parsed.y;
+                            const label = ctx.dataset.label;
+                            if (wert >= 1_000_000) {
+                                return ` ${label}: ${(wert / 1_000_000).toFixed(2)} Mio. €`;
+                            }
+                            return ` ${label}: ${Math.round(wert).toLocaleString('de-DE')} €`;
+                            }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: colors.muted, maxTicksLimit: 10 },
+                    grid: { display: true, color: colors.grid },
+                    stacked: true,
+                },
+                y: {
+                    ticks: {
+                        color: colors.muted,
+                        callback: val => val >= 1_000_000
+                            ? (val / 1_000_000).toFixed(1) + 'M €'
+                            : (val / 1_000).toFixed(0) + 'K €'
+                    },
+                    grid: { color: colors.grid, display: true},
+                    stacked: true,
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            }
+        }
+    });    
+}
+
 function main() {
+
+    updateColors();
 
     const input = leseInputs();
     
@@ -356,6 +521,8 @@ function main() {
     const verlauf = berechneJahresverlauf(input, gesamtStSatz);
     zeichneVermoegensverlauf(verlauf);
 
+    const zuwachs = berechneZuwachs(input);
+    zeichneKapitalzuwachs(zuwachs);
 }
 
 // listener für slider + number-inputs
@@ -404,7 +571,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
 // listener für theme-toggle
 document.getElementById('theme-toggle').addEventListener('click', () => {
-
     const html = document.documentElement;
     if (html.dataset.theme === 'light') {
         html.dataset.theme = 'dark';
